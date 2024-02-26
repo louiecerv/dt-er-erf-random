@@ -15,7 +15,7 @@ from sklearn.metrics import classification_report
 
 # Define the Streamlit app
 def app():
-    
+
     st.title('Logistic Regression, Naive Bayes Classifiers and Support Vector Machine')
     st.subheader('by Louie F. Cervantes M.Eng., WVSU College of ICT')
  
@@ -93,7 +93,6 @@ def app():
         clf = GaussianNB()
         
     if st.button('Start'):
-        
         centers = generate_random_points_in_square(-4, 4, -4, 4, n_clusters)
         X, y = make_blobs(n_samples=n_samples, n_features=2,
                     cluster_std=cluster_std, centers = centers,
@@ -106,6 +105,7 @@ def app():
         clf.fit(X_train,y_train)
         y_test_pred = clf.predict(X_test)
         st.subheader('Confusion Matrix')
+
         st.write('Confusion Matrix')
         cm = confusion_matrix(y_test, y_test_pred)
         st.text(cm)
@@ -113,6 +113,7 @@ def app():
         st.text(classification_report(y_test, y_test_pred))
         st.subheader('VIsualization')
         visualize_classifier(clf, X_test, y_test_pred)
+        st.session_state['new_cluster'] = False
 
 def visualize_classifier(classifier, X, y, title=''):
     # Define the minimum and maximum values for X and Y
