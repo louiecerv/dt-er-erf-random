@@ -51,6 +51,31 @@ def app():
               SVMs are powerful for complex problems, but their efficiency and 
               interpretability need consideration.""")
 
+    # Create a slider with a label and initial value
+    n_samples = st.slider(
+        label="Number of samples (200 to 4000):",
+        min_value=200,
+        max_value=4000,
+        step=200,
+        value=1000,  # Initial value
+    )
+
+    cluster_std = st.number_input("Standard deviation (between 0 and 1):")
+
+    random_state = st.slider(
+        label="Random seed (between 0 and 100):",
+        min_value=0,
+        max_value=100,
+        value=42,  # Initial value
+    )
+   
+    n_clusters = st.slider(
+        label="Number of Clusters:",
+        min_value=2,
+        max_value=6,
+        value=2,  # Initial value
+    )
+
     # Create the selecton of classifier
     clf = GaussianNB() 
     options = ['Logistic Regression', 'Naive Bayes', 'Support Vector Machine']
@@ -68,16 +93,10 @@ def app():
         
     if st.button('Start'):
         
-        df = pd.read_csv('data_decision_trees.csv', header=None)
-        # st.dataframe(df, use_container_width=True)  
-        
-        st.subheader('The Dataset')
-        # display the dataset
-        st.dataframe(df, use_container_width=True)  
-
-        #load the data and the labels
-        X = df.values[:,0:-1]
-        y = df.values[:,-1]          
+        centers = generate_random_points_in_square(-4, 4, -4, 4, n_clusters)
+        X, y = make_blobs(n_samples=n_samples, n_features=2,
+                    cluster_std=cluster_std, centers = centers,
+                    random_state=random_state)       
         
         # Split the dataset into training and testing sets
         X_train, X_test, y_train, y_test = train_test_split(X, y, \
@@ -134,7 +153,27 @@ def visualize_classifier(classifier, X, y, title=''):
 
     
     st.pyplot(fig)
-    
+
+def generate_random_points_in_square(x_min, x_max, y_min, y_max, num_points):
+    """
+    Generates a NumPy array of random points within a specified square region.
+
+    Args:
+        x_min (float): Minimum x-coordinate of the square.
+        x_max (float): Maximum x-coordinate of the square.
+        y_min (float): Minimum y-coordinate of the square.
+        y_max (float): Maximum y-coordinate of the square.
+        num_points (int): Number of points to generate.
+
+    Returns:
+        numpy.ndarray: A 2D NumPy array of shape (num_points, 2) containing the generated points.
+    """
+
+    # Generate random points within the defined square region
+    points = np.random.uniform(low=[x_min, y_min], high=[x_max, y_max], size=(num_points, 2))
+
+    return points
+
 #run the app
 if __name__ == "__main__":
     app()
