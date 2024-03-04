@@ -15,7 +15,7 @@ from sklearn.metrics import classification_report
 # Define the Streamlit app
 def app():
 
-    text = """Decision Tree, Random Forest and Extreme Random Forest on the Iris Dataset"""
+    text = """Decision Tree, Random Forest and Extreme Random Forest on Random Data Clusters"""
     st.subheader(text)
     text = """Louie F. Cervantes, M. Eng. (Information Engineering) \n\n
     CCS 229 - Intelligent Systems
