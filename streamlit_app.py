@@ -29,7 +29,7 @@ def app():
     overlapping clusters due to rigid decision boundaries. Misclassification is 
     likely at the cluster overlap regions.  Simple to interpret, efficient training."""
     st.write(text)
-    
+
     st.write('Random Forest')
     text = """Generally handles overlapping clusters better than decision trees due 
     to averaging predictions from multiple trees. Can still have issues with 
@@ -53,7 +53,13 @@ def app():
         value=1000,  # Initial value
     )
 
-    cluster_std = st.number_input("Standard deviation (between 0 and 1):")
+    cluster_std = st.slider(
+        label="Standard deviation (between 0 and 1):",
+        min_value=0.0,
+        max_value=1.0,
+        step=0.1,
+        value=0.5  # Initial value
+    )
 
     random_state = st.slider(
         label="Random seed (between 0 and 100):",
