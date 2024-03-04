@@ -28,8 +28,8 @@ def app():
     text = """A very fast classfier but vulnerable to overfitting. May struggle with 
     overlapping clusters due to rigid decision boundaries. Misclassification is 
     likely at the cluster overlap regions.  Simple to interpret, efficient training."""
-    st.write(text
-             )
+    st.write(text)
+    
     st.write('Random Forest')
     text = """Generally handles overlapping clusters better than decision trees due 
     to averaging predictions from multiple trees. Can still have issues with 
